@@ -1,6 +1,6 @@
 import pygame
 import urllib.request
-
+from sys import exit
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
@@ -95,22 +95,23 @@ def getInfo(album_id):
                 info["duration"].append(duration.text)
         except:
             pass
+        return False
     except:
-        failed = True
+        return True
 
 # pygame主程序循环
 while True:
     window.fill((0, 0 ,0))
     if loading:
-        welcome_title = font_spoqa.render("加载信息中...不要多次按下Enter", True, (255, 255, 255), None)
+        welcome_title = font_spoqa.render("加载信息中...", True, (255, 255, 255), None)
         window.blit(welcome_title, (14, 20))
         pygame.display.flip()
-        getInfo(getClipboardId())
+        failed = getInfo(getClipboardId())
         current_id = id
         loading = False
         welcome = False
     elif failed:
-        welcome_title = font_spoqa.render("无法从{id}中获取信息", True, (255, 255, 255), None)
+        welcome_title = font_spoqa.render("无法从{}中获取信息".format(id), True, (255, 255, 255), None)
         window.blit(welcome_title, (14, 20))
     elif welcome:
         welcome_title = font_spoqa.render("复制discogs专辑号后按Enter显示专辑信息", True, (255, 255, 255), None)
@@ -149,7 +150,8 @@ while True:
             window.blit(font_natsumi.render("无法获取封面图片", True, (222, 222, 222), None), (20, 300))
 
     pygame.display.flip()
-    clock.tick(30)
+    clock.tick(10)
+    
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             driver.quit()
@@ -159,5 +161,4 @@ while True:
                 id = getClipboardId()
                 if id != "" and current_id != id:
                     welcome = False
-                    failed = False
                     loading = True
