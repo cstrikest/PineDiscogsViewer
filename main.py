@@ -20,6 +20,7 @@ font_genei = pygame.font.Font("./fonts/genei-pople.ttf", 20)
 font_doki = pygame.font.Font("./fonts/DokiDokiFantasia.otf", 43)
 font_natsumi = pygame.font.Font("./fonts/natsuzemi-maru-gothic-black.ttf", 30)
 font_spoqa = pygame.font.Font("./fonts/SpoqaHanSansJPRegular.ttf", 16)
+font_spoqa2 = pygame.font.Font("./fonts/SpoqaHanSansJPRegular.ttf", 28)
 font_yaheib = pygame.font.FontType("./fonts/msyhbd.ttc", 14)
 font_yahei = pygame.font.FontType("./fonts/msyh.ttc", 16)
 
@@ -103,7 +104,7 @@ def getInfo(album_id):
 while True:
     window.fill((0, 0 ,0))
     if loading:
-        welcome_title = font_spoqa.render("加载信息中...", True, (255, 255, 255), None)
+        welcome_title = font_spoqa2.render("加载信息中...", True, (255, 255, 255), None)
         window.blit(welcome_title, (14, 20))
         pygame.display.flip()
         failed = getInfo(getClipboardId())
@@ -111,10 +112,10 @@ while True:
         loading = False
         welcome = False
     elif failed:
-        welcome_title = font_spoqa.render("无法从{}中获取信息".format(id), True, (255, 255, 255), None)
+        welcome_title = font_spoqa2.render("无法从{}中获取信息".format(id), True, (255, 255, 255), None)
         window.blit(welcome_title, (14, 20))
     elif welcome:
-        welcome_title = font_spoqa.render("复制discogs专辑号后按Enter显示专辑信息", True, (255, 255, 255), None)
+        welcome_title = font_spoqa2.render("双击discogs页面右上Release编号后按Enter显示专辑信息", True, (255, 255, 255), None)
         window.blit(welcome_title, (14, 20))
     else:
         name_render = font_natsumi.render(info["name"], True, (255, 255, 255), None)
